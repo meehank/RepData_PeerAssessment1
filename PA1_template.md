@@ -13,8 +13,7 @@ The variables included in this dataset are:
 ***
 
 * Load the data from activity.zip.
-    +   Each record lists the number of steps taken during a 5-minute interval of a particular date.
-    +   Also load needed dplyr and lattice libraries.  
+    +   Also load dplyr and lattice libraries.  
 
 
 ```r
@@ -30,8 +29,8 @@ library("lattice", quietly = TRUE, warn.conflicts = FALSE)
 
 
 * Aggregate the data by day, without imputing missing values.  
-    +   Make a histogram of steps per day, with nice x_breaks.  
-    +   Compute mean and median number of steps per day.  
+* Make a histogram of steps per day, with nice x_breaks.  
+* Compute mean and median number of steps per day.  
 
 
 ```r
@@ -53,8 +52,8 @@ histogram(days$totsteps, xlab="Steps per Day",
 ***
 
 * Agregate the data by interval and then plot the average daily activity pattern.  
-    +   Caclulate which 5-minute interval has the highest average number of steps.
-    +   And what that highest average number of steps is.
+* Calculate which 5-minute interval has the highest average number of steps.
+* Also caclulate the value of that highest average number of steps.
     +   (The missing values have still not been imputed.)  
 
 
@@ -79,10 +78,10 @@ xyplot(intervals$avgsteps ~ intervals$interval, type="l",
 ***
 
 * Impute the missing values.  
-    +   Use the average number of steps for that time interval for days for which the value is not missing.
-    +   Make a revised histogram of steps per day, with the same nice x_breaks.
-    +   Describe the missing values, as a number and as a percentage of all observations.
-    +   Re-calculate the mean and median number of steps per day.
+* Use the average number of steps for that time interval for days for which the value is not missing.
+* Make a revised histogram of steps per day, with the same nice x_breaks.
+* Describe the missing values, as a count and as a percentage of all observations.
+* Re-calculate the mean and median number of steps per day.
 
 
 ```r
@@ -115,8 +114,8 @@ histogram(days2$totsteps, xlab="Steps per Day",
 ***
 
 * For each observation, calculate whether it occured on the weekend or on a weekday.  
-    +   Aggregate by interval to find the average weekend day and the average weekday.
-    +   Plot the average activity patterns for weekend and weekday. 
+* Aggregate by interval to find the average weekend day and the average weekday.
+* Plot the average activity patterns for weekend and weekday. 
 
 
 ```r

@@ -120,7 +120,8 @@ $(document).ready(function () {
 <ul>
 <li>Load the data from activity.zip.
 <ul>
-<li>Also load dplyr and lattice libraries.</li>
+<li>Each record lists the number of steps taken during a 5-minute interval of a particular date.</li>
+<li>Also load needed dplyr and lattice libraries.</li>
 </ul></li>
 </ul>
 <pre class="r"><code>## Loading and preprocessing the data
@@ -130,9 +131,11 @@ library(&quot;lattice&quot;, quietly = TRUE, warn.conflicts = FALSE)</code></pre
 <p><em>17568 records have been loaded.</em></p>
 <hr />
 <ul>
-<li>Aggregate the data by day, without imputing missing values.<br /></li>
+<li>Aggregate the data by day, without imputing missing values.
+<ul>
 <li>Make a histogram of steps per day, with nice x_breaks.<br /></li>
 <li>Compute mean and median number of steps per day.</li>
+</ul></li>
 </ul>
 <pre class="r"><code>## What is mean total number of steps taken per day?
 days &lt;- activity %&gt;% group_by(date) %&gt;% summarize(totsteps=sum(steps))
@@ -146,10 +149,10 @@ histogram(days$totsteps, xlab=&quot;Steps per Day&quot;,
 <p><em>The mean number of steps per day is 10766.19.</em><br /><em>The median number of steps per day is 10765.</em></p>
 <hr />
 <ul>
-<li>Agregate the data by interval and then plot the average daily activity pattern.<br /></li>
-<li>Calculate which 5-minute interval has the highest average number of steps.</li>
-<li>Also caclulate the value of that highest average number of steps.
+<li>Agregate the data by interval and then plot the average daily activity pattern.
 <ul>
+<li>Caclulate which 5-minute interval has the highest average number of steps.</li>
+<li>And what that highest average number of steps is.</li>
 <li>(The missing values have still not been imputed.)</li>
 </ul></li>
 </ul>
@@ -167,11 +170,13 @@ xyplot(intervals$avgsteps ~ intervals$interval, type=&quot;l&quot;,
 <p><em>The maximum average number of steps in an interval is 206.17.</em><br /><em>This occurs in interval 835.</em></p>
 <hr />
 <ul>
-<li>Impute the missing values.<br /></li>
+<li>Impute the missing values.
+<ul>
 <li>Use the average number of steps for that time interval for days for which the value is not missing.</li>
 <li>Make a revised histogram of steps per day, with the same nice x_breaks.</li>
-<li>Describe the missing values, as a count and as a percentage of all observations.</li>
+<li>Describe the missing values, as a number and as a percentage of all observations.</li>
 <li>Re-calculate the mean and median number of steps per day.</li>
+</ul></li>
 </ul>
 <pre class="r"><code>## Imputing missing values
 whichna &lt;- activity[is.na(activity$steps),]  #records of activity with steps=NA 
@@ -194,9 +199,11 @@ histogram(days2$totsteps, xlab=&quot;Steps per Day&quot;,
 <p><em>With imputed missing values, the mean number of steps per day is 10766.19.</em><br /><em>With imputed missing values, the median number of steps per day is 10766.19.</em></p>
 <hr />
 <ul>
-<li>For each observation, calculate whether it occured on the weekend or on a weekday.<br /></li>
+<li>For each observation, calculate whether it occured on the weekend or on a weekday.
+<ul>
 <li>Aggregate by interval to find the average weekend day and the average weekday.</li>
 <li>Plot the average activity patterns for weekend and weekday.</li>
+</ul></li>
 </ul>
 <pre class="r"><code>## Are there differences in activity patterns between weekdays and weekends?
 imputed$when &lt;- as.factor(ifelse(weekdays(as.Date(imputed$date))
