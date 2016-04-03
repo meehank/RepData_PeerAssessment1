@@ -1,9 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 #### **an analysis of data recorded by a personal activity monitoring device**
 The data consists of two months of data from an anonymous individual  
@@ -21,14 +16,15 @@ The variables included in this dataset are:
     +   Each record lists the number of steps taken during a 5-minute interval of a particular date.
     +   Also load needed dplyr and lattice libraries.  
 
-```{r load data, echo = TRUE}
+
+```r
 ## Loading and preprocessing the data
 activity <- read.csv(unz("activity.zip", "activity.csv"), header=TRUE, quote="\"")
 library("dplyr", quietly = TRUE, warn.conflicts = FALSE)
 library("lattice", quietly = TRUE, warn.conflicts = FALSE)
 ```
 
-*`r nrow(activity)` records have been loaded.*
+*17568 records have been loaded.*
 
 ***
 
@@ -37,7 +33,8 @@ library("lattice", quietly = TRUE, warn.conflicts = FALSE)
     +   Make a histogram of steps per day, with nice x_breaks.  
     +   Compute mean and median number of steps per day.  
 
-```{r mean steps per day, echo = TRUE, fig.path = "figure/plot_"}
+
+```r
 ## What is mean total number of steps taken per day?
 days <- activity %>% group_by(date) %>% summarize(totsteps=sum(steps))
 x_breaks=c(0,2500,5000,7500,10000,12500,15000,17500,20000,22500)
@@ -48,8 +45,10 @@ histogram(days$totsteps, xlab="Steps per Day",
                 scales=list(x=list(at=x_breaks)))
 ```
 
-*The mean number of steps per day is `r sprintf("%.2f",avgstepsperday)`.*  
-*The median number of steps per day is `r sprintf("%.0f",medianstepsperday)`.* 
+![](figure/plot_mean steps per day-1.png)
+
+*The mean number of steps per day is 10766.19.*  
+*The median number of steps per day is 10765.* 
 
 ***
 
@@ -58,7 +57,8 @@ histogram(days$totsteps, xlab="Steps per Day",
     +   And what that highest average number of steps is.
     +   (The missing values have still not been imputed.)  
 
-```{r average daily activity pattern, echo = TRUE, fig.path = "figure/plot_"}
+
+```r
 ## What is the average daily activity pattern?
 intervals <- activity[complete.cases(activity),] %>%
   group_by(interval) %>% summarize(avgsteps=mean(steps), na.rm=TRUE)
@@ -71,8 +71,10 @@ xyplot(intervals$avgsteps ~ intervals$interval, type="l",
       xlab="Interval", ylab="Number of Steps")
 ```
 
-*The maximum average number of steps in an interval is `r sprintf("%.2f",maxnumberofsteps)`.*  
-*This occurs in interval `r sprintf("%.0f",moststeppyinterval)`.* 
+![](figure/plot_average daily activity pattern-1.png)
+
+*The maximum average number of steps in an interval is 206.17.*  
+*This occurs in interval 835.* 
 
 ***
 
@@ -82,7 +84,8 @@ xyplot(intervals$avgsteps ~ intervals$interval, type="l",
     +   Describe the missing values, as a number and as a percentage of all observations.
     +   Re-calculate the mean and median number of steps per day.
 
-```{r imputing missing values, echo = TRUE, fig.path = "figure/plot_"}
+
+```r
 ## Imputing missing values
 whichna <- activity[is.na(activity$steps),]  #records of activity with steps=NA 
 nna <- nrow(whichna)
@@ -101,11 +104,13 @@ histogram(days2$totsteps, xlab="Steps per Day",
                 scales=list(x=list(at=x_breaks)))
 ```
 
-*The number of missing values is `r sprintf("%.0f",nna)`.*   
-*The percentage of missing values is `r sprintf("%.2f",pctna)`%.*  
+![](figure/plot_imputing missing values-1.png)
 
-*With imputed missing values, the mean number of steps per day is `r sprintf("%.2f",avgstepsperday)`.*  
-*With imputed missing values, the median number of steps per day is `r sprintf("%.2f",medianstepsperday)`.*
+*The number of missing values is 2304.*   
+*The percentage of missing values is 13.11%.*  
+
+*With imputed missing values, the mean number of steps per day is 10766.19.*  
+*With imputed missing values, the median number of steps per day is 10766.19.*
 
 ***
 
@@ -113,7 +118,8 @@ histogram(days2$totsteps, xlab="Steps per Day",
     +   Aggregate by interval to find the average weekend day and the average weekday.
     +   Plot the average activity patterns for weekend and weekday. 
 
-```{r differences between weedays and weekends, echo = TRUE, fig.path = "figure/plot_"}
+
+```r
 ## Are there differences in activity patterns between weekdays and weekends?
 imputed$when <- as.factor(ifelse(weekdays(as.Date(imputed$date))
                                  %in% c("Saturday", "Sunday"),
@@ -123,3 +129,5 @@ intervals2 <- imputed %>%
 xyplot(intervals2$avgsteps ~ intervals2$interval|intervals2$when,
               xlab="Interval", ylab="Number of Steps", type="l", layout=c(1,2))
 ```
+
+![](figure/plot_differences between weedays and weekends-1.png)
