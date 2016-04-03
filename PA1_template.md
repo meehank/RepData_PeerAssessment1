@@ -53,7 +53,7 @@ histogram(days$totsteps, xlab="Steps per Day",
 
 * Agregate the data by interval and then plot the average daily activity pattern.  
 * Calculate which 5-minute interval has the highest average number of steps.
-* Also caclulate the value of that highest average number of steps.
+* Also calculate the value of that highest average number of steps.
     +   (The missing values have still not been imputed.)  
 
 
